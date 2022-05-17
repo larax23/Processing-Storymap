@@ -1,0 +1,23 @@
+#Code written in R language
+# Load packages:
+# An air quality data analysis package
+library(openair)
+# and a package which makes dates easy
+library(lubridate)
+# Read ten-minute data file
+data.alb <- read.csv('albany_cli_flo_data_december_2013.csv')
+# Process the dates into the POSIXct format
+data.alb$date <- ymd_hms(data.alb$date)
+# Calculate hourly means
+data.alb.hour <- timeAverage(data.alb, avg.time = 'hour')
+head(data.alb.hour, 5)
+## site date temp rh ws wd rain rad
+## 1 Albany 2013-12-01 00:00:00 14.87 87.50 1.0333 260.4 0.03333 0
+## 2 Albany 2013-12-01 01:00:00 14.87 88.00 0.9833 272.6 0.00000 0
+## 3 Albany 2013-12-01 02:00:00 14.58 84.67 1.2000 246.8 0.00000 0
+## 4 Albany 2013-12-01 03:00:00 14.05 84.00 0.7833 276.5 0.00000 0
+## 5 Albany 2013-12-01 04:00:00 13.20 86.17 0.9500 269.4 0.00000 0
+# Display the wind rose
+windRose(data.alb.hour, paddle = F)
+
+NOTE: code obtained from the following article 10.13140/RG.2.1.3349.2006
